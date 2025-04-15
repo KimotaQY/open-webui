@@ -156,7 +156,7 @@
 					<img
 						crossorigin="anonymous"
 						src="{WEBUI_BASE_URL}/static/splash.png"
-						class=" w-6 rounded-full dark:invert"
+						class=" w-12 rounded-full dark:invert"
 						alt="logo"
 					/>
 				</div>
@@ -164,7 +164,7 @@
 		</div>
 
 		<div
-			class="fixed bg-transparent min-h-screen w-full flex justify-center font-primary z-50 text-black dark:text-white"
+			class="fixed bg-transparent min-h-screen w-full flex justify-center font-primary z-50 text-black dark:text-white login-container"
 		>
 			<div class="w-full sm:max-w-md px-10 min-h-screen flex flex-col text-center">
 				{#if ($config?.features.auth_trusted_header ?? false) || $config?.features.auth === false}
@@ -182,9 +182,9 @@
 						</div>
 					</div>
 				{:else}
-					<div class="  my-auto pb-10 w-full dark:text-gray-100">
+					<div class="  my-auto pb-10 w-full dark:text-gray-100 login-box">
 						<form
-							class=" flex flex-col justify-center"
+							class=" flex flex-col justify-center login-form"
 							on:submit={(e) => {
 								e.preventDefault();
 								submitHandler();
@@ -192,7 +192,7 @@
 						>
 							<div class="mb-1">
 								<div class=" text-2xl font-medium">
-									{#if $config?.onboarding ?? false}
+									<!-- {#if $config?.onboarding ?? false}
 										{$i18n.t(`Get started with {{WEBUI_NAME}}`, { WEBUI_NAME: $WEBUI_NAME })}
 									{:else if mode === 'ldap'}
 										{$i18n.t(`Sign in to {{WEBUI_NAME}} with LDAP`, { WEBUI_NAME: $WEBUI_NAME })}
@@ -200,12 +200,21 @@
 										{$i18n.t(`Sign in to {{WEBUI_NAME}}`, { WEBUI_NAME: $WEBUI_NAME })}
 									{:else}
 										{$i18n.t(`Sign up to {{WEBUI_NAME}}`, { WEBUI_NAME: $WEBUI_NAME })}
+									{/if} -->
+									{#if $config?.onboarding ?? false}
+										{$i18n.t(`Get started with {{WEBUI_NAME}}`, { WEBUI_NAME: '' })}
+									{:else if mode === 'ldap'}
+										{$i18n.t(`Sign in to {{WEBUI_NAME}} with LDAP`, { WEBUI_NAME: '' })}
+									{:else if mode === 'signin'}
+										{$i18n.t(`Sign in to {{WEBUI_NAME}}`, { WEBUI_NAME: '' })}
+									{:else}
+										{$i18n.t(`Sign up to {{WEBUI_NAME}}`, { WEBUI_NAME: '' })}
 									{/if}
 								</div>
 
 								{#if $config?.onboarding ?? false}
 									<div class=" mt-1 text-xs font-medium text-gray-500">
-										ⓘ {$WEBUI_NAME}
+										ⓘ {''}
 										{$i18n.t(
 											'does not make any external connections, and your data stays securely on your locally hosted server.'
 										)}
@@ -452,6 +461,80 @@
 					</div>
 				{/if}
 			</div>
+			<div class=" fixed bottom-0 flex mt-1 text-xs font-medium text-gray-500">广西壮族自治区 @ 自然资源遥感院</div>
 		</div>
+		<div class="bg_bottom1"></div>
 	{/if}
 </div>
+
+<style scoped>
+	.bg_bottom1 {
+		/* background-image: url(https://cdn-3d-prod.hunyuan.tencent.com/public/5ec3e3ec33ed8028343d.png); */
+		background-image: url(/src/login_bg.png);
+		width: 100vw;
+		height: calc(63.5vw);
+		background-size: cover;
+		background-repeat: no-repeat;
+		position: absolute;
+		bottom: 0px;
+		z-index: 2;
+		background-position: center bottom;
+	}
+	.login-box {
+		position: relative;
+		/* top: 30%;
+		right: 10%; */
+		width: 100%;
+		/* height: 420px; */
+		padding: 0;
+		background: transparent;
+		border-radius: 8px;
+		overflow: hidden;
+	}
+
+	.login-box::before {
+		content: '';
+		z-index: 1;
+		position: absolute;
+		top: -50%;
+		left: -50%;
+		width: 100%;
+		height: 100%;
+		transform-origin: bottom right;
+		background: linear-gradient(0deg, transparent, #45f3ff, #45f3ff);
+		animation: animate 6s linear infinite;
+	}
+
+	.login-box::after {
+		content: '';
+		z-index: 1;
+		position: absolute;
+		top: -50%;
+		left: -50%;
+		width: 100%;
+		height: 100%;
+		transform-origin: bottom right;
+		background: linear-gradient(0deg, transparent, #45f3ff, #45f3ff);
+		animation: animate 6s linear infinite;
+		animation-delay: -3s;
+	}
+
+	@keyframes animate {
+		0% {
+			transform: rotate(0deg);
+		}
+
+		100% {
+			transform: rotate(360deg);
+		}
+	}
+
+	.login-form {
+		position: relative;
+		z-index: 2;
+		padding: 10%;
+		background: #28292d;
+		margin: 2px;
+		border-radius: 8px;
+	}
+</style>
